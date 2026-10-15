@@ -1,7 +1,13 @@
 % metode biseksi pnl 1
 
 function c = Biseksi(f,a,b,n,tol)
-  f = @(x) 3*x.^3-5*x.^2+4*x-7;
+  % f(x) = 3*x^3 - 5*x^2 + 4*x - 7
+  % y = 1
+  % f(x) = y
+  % 3*x^3 - 5*x^2 + 4*x - 7 = 1
+  % 3*x^3 - 5*x^2 + 4*x - 7 _ 1 = 0
+  % 3*x^3 - 5*x^2 + 4*x - 8 = 0, maka:
+  f = @(x) 3*x.^3-5*x.^2+4*x-8;
   a = 0;
   b = 2.5;
   n = 20;
