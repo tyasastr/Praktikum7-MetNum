@@ -21,5 +21,5 @@ legend('y1 = log(x + 2)', 'y2 = 2x - 3', 'Location', 'southeast');
 
 % annotation
 gtext('y1 = log(x + 2)');
-gtext('_2 = 2*x - 3');
+gtext('y2 = 2*x - 3');
 gtext('Akar');
