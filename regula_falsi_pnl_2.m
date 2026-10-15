@@ -7,41 +7,38 @@ function c = RegulasiFalsi(f,a,b,n,tol)
   n = 20;
   tol = 1e-4;
 
-  %Menghitung nilai dari fungsi f pada titik a dan b
+%menghitung nilai dari fungsi f pada titik a & b
   fa = f(a);
   fb = f(b);
 
-  %Cek apakah fa dan fb memiliki tanda yang berbeda
-  if fa*fb>0
-    error('Warning nilai f(a) dan f(b) harus memiliki tanda yang berbeda.');
-  end
+  %cek apakah fa dan fb memiliki tanda yang sama
+  if fa*fb > 0
+    error('Warning tanda sama.')
+  endif
 
-  fprintf('\nIter\t\ta\t\tb\t\tfa\t\tfb\t\tc\t\tfc\n');
+  fprintf('\nIter\ta\t\tb\t\tfa\t\tfb\t\tc\t\tfc\n');
 
-  %Iterasi menggunakan regulasi falsi
+  %Iterasi pencarian akar menggunakan metode regulasi falsi
   for i = 1:n
-    c = (a * fb - b *fa) / (fb -fa);
+    c = (a*fb-b*fa)/(fb-fa); %rumus metode regulasi falsi
     fc = f(c);
+    %cetak nilai
+    fprintf('%d\t%f\t%f\t%f\t%f\t%f\t%f\n',
+            i,a,b,fa,fb,c,fc);
 
-    %cetak nilai setiap iterasi
-    fprintf('%d\t\t%f\t%f\t%f\t%f\t%f\t%f\n', i,a,b,fa,fb,c,fc);
+    if abs(c-a) <= tol || abs(c-b) <= tol
+      break;
+    endif
 
-    %menghentikan iterasi saat error mencapai batas toleransi
-    if abs(fc) <= tol || abs(c - a) <= tol || abs(c - b) <= tol
-      fprintf('\nAkar ditemukan pada x = %f setelah %d iterasi\n', c, i);
-      return
-    end
-
-    %Memperbarui interval
-    if fa * fc < 0
+    %jika fa atau fc bernilai 0 maka akar ditemukan
+    if fa*fc == 0
+      break;
+    elseif fa*fc < 0
       b = c;
-      fb = fc;
+      fb = f(b);
     else
       a = c;
-      fa = fc;
-    end
-  end
-
-  fprintf('\nAkar tidak ditemukan setelah %d iterasi. Hasil terakhir adalah x = %f\n', n,c);
-end
-
+      fa = f(a);
+    endif
+  endfor
+ end
